@@ -1,30 +1,44 @@
+import java.sql.SQLOutput;
+
 public class BinaryHeap {
 
-    private float[] data;
+    private int[] data;
     private int size;
     private int INITIAL_SIZE = 10;
     private int root;
 
-    public BinaryHeap{
-        Object[] tempArray = (T[]) new Object[INITIAL_SIZE];
-        data = (T[]) tempArray;
+    public BinaryHeap() {
+//        Object[] tempArray = (T[]) new Object[INITIAL_SIZE];
+//        data = (T[]) tempArray;
         // or
-        data = new float[INITIAL_SIZE];
-        size = INITIAL_SIZE;
+        data = new int[INITIAL_SIZE];
+        //size = INITIAL_SIZE;
+        System.out.println("Successfully implemented data");
     }
 
     /**
      * Adds a given item to the array
      * @param item the item to be added/inserted
      */
-    public void add(float item) {
+    public void add(int item) {
         // grow array if needed
         if (data.length == size) {
             growArray();
         }
         data[size ++] = item; // put item at the end, then increment size
-        int current = size - 1; // current position is penultimate index
-        int parent = (current - 1)/2; // formula for finding the parent index
+
+        // but what if size = 1? No penultimate object
+        int current;
+        int parent;
+        if (size == 1) {
+            current = 0;
+            parent = 0;
+        }
+        else {
+            current = size - 1; // current position is penultimate index
+            parent = (current - 1)/2; // formula for finding the parent index
+        }
+
 
         // swaps to make array numerical order
         while(data[current] < data[parent] && current != 0); {// as long as the
@@ -41,7 +55,7 @@ public class BinaryHeap {
      * Removes the last item from the array
      * @return the last item that is removed
      */
-    public float remove() {
+    public int remove() {
         /*
         Swap the last item with the root, or the smallest item
          */
@@ -84,7 +98,7 @@ public class BinaryHeap {
      * Grows the array to twice its length
      */
     public void growArray() {
-        float[] twiceArray = new float[data.length * 2];
+        int[] twiceArray = new int[data.length * 2];
         for (int index = 0; index < data.length; index ++)
         {
             twiceArray[index] = data[index];
@@ -100,9 +114,33 @@ public class BinaryHeap {
      * @param current one value to be swapped
      * @param parent another value to be swapped
      */
-    private void swap(float[] data, int current, int parent) {
-        float temp = data[current];
+    private void swap(int[] data, int current, int parent) {
+        int temp = data[current];
         data[current] = data[parent];
         data[parent] = temp;
     }
+
+    private int getSize() {
+        return this.size;
+    }
+
+    private void printData() {
+        for (int index = 0; index < this.size; index ++) {
+            System.out.print(this.data[index] + " ");
+        }
+
+    }
+
+    public static void main(String[] args) {
+        BinaryHeap myHeap = new BinaryHeap();
+        myHeap.add(4);
+        myHeap.add(5);
+        myHeap.add(2);
+
+        for (int index = 0; index < myHeap.getSize(); index ++) {
+            myHeap.printData();
+        }
+
+    }
+
 }
