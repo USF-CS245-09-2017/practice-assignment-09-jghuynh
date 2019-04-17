@@ -22,44 +22,23 @@ public class BinaryHeap {
      */
     public void add(int item) {
         // grow array if needed
-        if (data.length == size) {
+        if (this.size >= this.data.length) {
             growArray();
         }
-        data[size ++] = item; // put item at the end, then increment size
-        System.out.println("Data now has " + item + "\tsize = " + this.size);
+        this.data[size ++] = item; // put item at the end, then increment size
 
-        // but what if size = 1? No penultimate object
-        int current;
-        int parent;
-
-        if (size == 1) {
-            current = 0;
-            parent = 0;
-        }
-        else {
-            current = size - 1; // current position is penultimate index
-            parent = (current - 1)/2; // formula for finding the parent index
-        }
-        System.out.println("End of if-else statement");
-        System.out.println("Current = "+ current + "\t parent = "+ parent);
-
+        int current = this.size - 1; // current position is penultimate index
+        int parent = (current - 1)/2; // formula for finding the parent index
 
         // swaps to make array numerical order
-        while((data[current] < data[parent]) && current != 0); {// as long as the
+        while((data[current] < data[parent]) && current > 0); {// as long as the
         // current value is less than the parent object, switch! Make sure to stop swapping if current
             // does not have parent
-            System.out.println("While data[current] = " + data[current] + "\t < data[parent] = " +
-            data[parent] + "\tand current is not 0");
             root = current; // so now root will eventually have min value
-            System.out.println("root = " + root);
             swap(data, current, parent);
-            System.out.println("Swapped. Current = " + current + "\t parent = " + parent);
             current = parent;
-            System.out.println("Current = " + current);
-            parent = (parent - 1)/2;
-            System.out.println("Parent = " + parent);
+            parent = (current - 1)/2; // find current's parents
         }
-        System.out.println("root = " + root + "\t current = " + current);
     }
 
     /**
@@ -71,8 +50,8 @@ public class BinaryHeap {
         Swap the last item with the root, or the smallest item
          */
         swap(data, 0, size - 1);
-        data[root] = data[size - 1];
-        data[size - 1] = 0;
+        data[root] = data[size - 1]; // root item becomes the last item (position still at root)
+        data[size - 1] = 0; // get rid of the empty space
         size --;
         if (size > 0) {
             shiftDown(0);
