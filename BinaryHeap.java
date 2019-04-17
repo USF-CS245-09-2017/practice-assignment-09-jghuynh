@@ -12,6 +12,7 @@ public class BinaryHeap {
 //        data = (T[]) tempArray;
         // or
         data = new int[INITIAL_SIZE];
+        size = 0;
     }
 
     /**
@@ -34,11 +35,11 @@ public class BinaryHeap {
         while((data[current] < data[parent]) && current > 0) {// as long as the
         // current value is less than the parent object, switch! Make sure to stop swapping if current
             // does not have parent
-            root = current; // so now root will eventually have min value
+//            root = current; // so now root will eventually have min value
             swap(data, current, parent);
             //System.out.println("We swapped data[current] = " + data[current] + " and data[parent] = " + data[parent]);
             current = parent;
-            parent = (current - 1)/2; // find current's parents
+            parent = (parent - 1)/2; // find current's parents
         }
     }
 
@@ -47,26 +48,24 @@ public class BinaryHeap {
      * @return the last item that is removed
      */
     public int remove() {
-        swap(data, 0, size - 1);
-        System.out.println("Size = " + size);
-        System.out.println("Just swapped position1 = " + 0 + "\t position2 = " + (size - 1));
-        System.out.println("Now data[0] = " + data[0] + "\t data[size - 1] = " + data[size - 1]);
-        int removedItem = data[0];
-        System.out.println("RemovedItem = " + removedItem);
-        this.data[this.root] = this.data[this.size - 1]; // root item copies the last item (position still at root)
-        this.data[0] = data[root];
-        System.out.println("Root = " + root);
-        System.out.println("data[root] = " + data[size - 1]);
-        this.data[this.size - 1] = 0; // get rid of the empty space
-        System.out.println("data[size - 1] = last index = " + data[size - 1]);
-        this.size --;
-        System.out.println("Size = " + size);
-        if (this.size > 0) {
-            shiftDown(0);
+        //throw exception for size = 0
+        int remoItem;
+        try {
+            if (size == 0) {
+
+            throw new Exception("Size is 0!!!");
+
+            }
+        }catch (Exception e) {
+            System.out.println("Error!");
         }
-        System.out.println("removedItem = " + removedItem);
-        System.out.println("data[size - 1] = last index = " + data[size - 1]);
-        return removedItem;
+
+            remoItem = data[0];
+            swap(data, 0, size - 1);
+            this.size --;
+            if (this.size > 0) {
+                shiftDown(0); }
+        return remoItem;
 
         /*
         int left_child = (2*parent_index) + 1
@@ -77,19 +76,29 @@ public class BinaryHeap {
         parent = (parent - 1)/2;
          */
 
+
     }
 
     public void shiftDown(int position){
-        int child = 2 * position + 1;
+        int parent  = position;
+        int leftChild = 2 * parent + 1;
+        int rightChild = 2* parent + 2;
         // base case
-        if (size < child) {
-            if (data[child] > data[child + 1]) { // finds smaller child
-                child ++;
-            }
-            if (data[position] > data[child]) { // compares position and child
-                swap(data, child, position); // swaps if necessary
-                shiftDown(child);
-            }
+        if (leftChild >= size || rightChild >= size) // if out of bounds
+        {
+            // stop!
+            return;
+        }
+
+        if (data[leftChild] > data[rightChild] && data[rightChild] < data[parent]) { // finds smaller child
+           // System.out.println("position: " + position + " rigtchild " + rightChild );
+            swap(data, parent, rightChild);
+
+            shiftDown(rightChild);
+        }
+        else if(data[rightChild] > data[leftChild] && data[leftChild] < data[parent]) {
+            swap(data, parent, leftChild);
+            shiftDown(leftChild);
         }
 
     }
@@ -118,6 +127,8 @@ public class BinaryHeap {
         int temp = data[current];
         data[current] = data[parent];
         data[parent] = temp;
+//        System.out.println("current: " + current);
+//        System.out.println("parent: " + parent);
     }
 
     private int getSize() {
@@ -131,7 +142,7 @@ public class BinaryHeap {
 
     }
 
-    public static void main(String[] args) {
+    /*public static void main(String[] args) {
         BinaryHeap myHeap = new BinaryHeap();
         System.out.println("Adding 4");
         myHeap.add(4);
@@ -163,6 +174,6 @@ public class BinaryHeap {
             System.out.println("size = " + myHeap.getSize());
         }
 
-    }
+    }*/
 
 }
