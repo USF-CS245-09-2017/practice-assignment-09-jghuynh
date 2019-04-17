@@ -28,7 +28,6 @@ public class Practice09Test {
 	public boolean insertRemoveTest() {
 		heap.add(1);
 		if (heap.remove() == 1) {
-            System.out.println("Remove works");
 		    return true;
 
 		}
