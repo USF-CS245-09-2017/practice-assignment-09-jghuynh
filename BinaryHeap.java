@@ -3,7 +3,7 @@ public class BinaryHeap {
     private int[] data;
     private int size;
     private int INITIAL_SIZE = 10;
-    
+
     public BinaryHeap() {
         data = new int[INITIAL_SIZE];
     }
@@ -56,9 +56,6 @@ public class BinaryHeap {
         int left_child = (2*parent_index) + 1
         int right_child = (2*parent_index) + 2
         int parent = (child_index - 1)/2
-        while parent < child {
-        child = parent;
-        parent = (parent - 1)/2;
          */
 
 
