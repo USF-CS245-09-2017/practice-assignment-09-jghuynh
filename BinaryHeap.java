@@ -3,7 +3,7 @@ public class BinaryHeap {
     private int[] data;
     private int size;
     private int INITIAL_SIZE = 10;
-
+    
     public BinaryHeap() {
         data = new int[INITIAL_SIZE];
     }
