@@ -5,14 +5,9 @@ public class BinaryHeap {
     private int[] data;
     private int size;
     private int INITIAL_SIZE = 10;
-    private int root;
 
     public BinaryHeap() {
-//        Object[] tempArray = (T[]) new Object[INITIAL_SIZE];
-//        data = (T[]) tempArray;
-        // or
         data = new int[INITIAL_SIZE];
-        size = 0;
     }
 
     /**
@@ -20,24 +15,19 @@ public class BinaryHeap {
      * @param item the item to be added/inserted
      */
     public void add(int item) {
-        // grow array if needed
         if (this.size >= this.data.length) {
             growArray();
         }
         this.data[size ++] = item; // put item at the end, then increment size
 
-        int current = this.size - 1; // current position is penultimate index
+        int current = this.size - 1; // current position is last index
         int parent = (current - 1)/2; // formula for finding the parent index
-        //System.out.println("Current = " + current + "\t data[current] = " + data[current]);
-        //System.out.println("Parent = " + parent + "\t data[parent] = " + data[parent]);
 
         // swaps to make array numerical order
         while((data[current] < data[parent]) && current > 0) {// as long as the
-        // current value is less than the parent object, switch! Make sure to stop swapping if current
-            // does not have parent
-//            root = current; // so now root will eventually have min value
+        // current value is less than the parent object, switch!
+            // Make sure to stop swapping if current does not have parent
             swap(data, current, parent);
-            //System.out.println("We swapped data[current] = " + data[current] + " and data[parent] = " + data[parent]);
             current = parent;
             parent = (parent - 1)/2; // find current's parents
         }
@@ -49,7 +39,6 @@ public class BinaryHeap {
      */
     public int remove() {
         //throw exception for size = 0
-        int remoItem;
         try {
             if (size == 0) {
 
@@ -59,13 +48,11 @@ public class BinaryHeap {
         }catch (Exception e) {
             System.out.println("Error!");
         }
-
-            remoItem = data[0];
             swap(data, 0, size - 1);
             this.size --;
             if (this.size > 0) {
                 shiftDown(0); }
-        return remoItem;
+        return data[size];
 
         /*
         int left_child = (2*parent_index) + 1
@@ -86,14 +73,11 @@ public class BinaryHeap {
         // base case
         if (leftChild >= size || rightChild >= size) // if out of bounds
         {
-            // stop!
             return;
         }
 
         if (data[leftChild] > data[rightChild] && data[rightChild] < data[parent]) { // finds smaller child
-           // System.out.println("position: " + position + " rigtchild " + rightChild );
             swap(data, parent, rightChild);
-
             shiftDown(rightChild);
         }
         else if(data[rightChild] > data[leftChild] && data[leftChild] < data[parent]) {
@@ -115,8 +99,6 @@ public class BinaryHeap {
         data = twiceArray;
     }
 
-
-
     /**
      * Swaps 2 given values from a give array
      * @param data the given aray
@@ -127,53 +109,8 @@ public class BinaryHeap {
         int temp = data[current];
         data[current] = data[parent];
         data[parent] = temp;
-//        System.out.println("current: " + current);
-//        System.out.println("parent: " + parent);
     }
-
-    private int getSize() {
-        return this.size;
-    }
-
-    private void printData() {
-        for (int index = 0; index < this.size; index ++) {
-            System.out.print(this.data[index] + " ");
-        }
-
-    }
-
-    /*public static void main(String[] args) {
-        BinaryHeap myHeap = new BinaryHeap();
-        System.out.println("Adding 4");
-        myHeap.add(4);
-        System.out.println("Adding 5");
-        myHeap.add(5);
-        myHeap.printData();
-        System.out.println("Removing 5");
-        System.out.println(myHeap.remove());
-        System.out.println("Heap after removing 5");
-        myHeap.printData();
-        System.out.println("Adding 3");
-
-        myHeap.add(3);
-        myHeap.printData();
-        System.out.println("Adding 8");
-        myHeap.add(8);
-        myHeap.printData();
-        System.out.println("Size = " + myHeap.getSize());
-        System.out.println("Removing " + 8);
-        myHeap.remove();
-        myHeap.printData();
-        // 3, 4
-        // shit remove doesn't always remove the biggest number
-        //myHeap.add(2);
-
-        System.out.println("For-loop");
-        for (int index = 0; index < myHeap.getSize(); index ++) {
-            myHeap.printData();
-            System.out.println("size = " + myHeap.getSize());
-        }
-
-    }*/
 
 }
+
+
